@@ -14,7 +14,15 @@
 
 // CODE HERE...
 
-
+var callBinding = function(magicAnimals, updateAnimal, id){
+  var updated;
+  magicAnimals.forEach(obj => {
+    if(obj.id === id){
+      updated = updateAnimal.call(obj, 'Trogdor')
+    };
+  });
+  return updated;
+};
 
 // *************
 // * PROBLEM 2 *
@@ -29,7 +37,15 @@
 
 // CODE HERE...
 
-
+var applyBinding = function(magicAnimals, updateAnimal, id){
+  var toReturn;
+  magicAnimals.forEach(obj => {
+    if(obj.id === id){
+      toReturn = updateAnimal.apply(obj, ['being majestic', 'eating rainbows'])
+    };
+  });
+  return toReturn;
+};
 
 // *************
 // * PROBLEM 3 *
@@ -49,7 +65,14 @@ var foo;
 
 // CODE HERE...
 
-
+var promiseMe = function($q){
+  var myDelay = $q.defer();
+  setTimeout(function(){
+    foo = 'bar';
+    myDelay.resolve('bar')
+  }, 20);
+  return myDelay.promise
+};
 
 // *************
 // * PROBLEM 4 *
@@ -64,3 +87,15 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+var emailList = function($q, $http){
+  var myPromise = $q.defer();
+  var emails = [];
+  $http({
+    method: 'GET',
+    url: '/api/users'})
+    .then(function(res){
+    res.data.forEach(obj => { emails.push(obj.email)});
+    myPromise.resolve(emails)});
+  return myPromise.promise;
+};
